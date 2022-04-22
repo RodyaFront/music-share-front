@@ -1,0 +1,16 @@
+$t-duration: 250ms;
+$t-delay: 300ms;
+
+.default-enter-active,
+.default-leave-active {
+  transition-property: opacity;
+  transition-duration: $t-duration;
+  transition-timing-function: ease-in-out;
+}
+
+.default-leave-to {
+  opacity: 0.2;
+}
+.default-enter-to {
+  opacity: 1;
+}
