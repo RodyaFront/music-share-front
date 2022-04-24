@@ -1,0 +1,156 @@
+.m-message {
+  &.with-icon {
+    padding: 20px 20px 20px 50px;
+  }
+
+  &__group {
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 70px;
+    right: 20px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+  }
+
+  &__close-icon {
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border-radius: 100%;
+    padding: 2px;
+    transition: 250ms ease-in-out;
+    opacity: 0;
+
+    & i {
+      display: flex;
+    }
+
+    &:hover {
+      background-color: rgba(245, 0, 0, 0.2);
+    }
+  }
+
+  &__title {
+    font-size: 14.4px;
+    font-weight: 600;
+  }
+
+  &__text {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 400;
+    p + p {
+      margin-top: 10px;
+    }
+  }
+
+  &__item {
+    position: relative;
+    border-radius: 3px;
+    padding: 20px;
+    transition: 250ms ease-in-out;
+    box-shadow: 0 3px 20px rgba(7, 26, 77, 0.18);
+    min-width: 250px;
+    max-width: 400px;
+
+    & * {
+      font-family: Roboto, sans-serif;
+    }
+
+    &:hover {
+      transform: translateY(3px);
+      box-shadow: 0 3px 5px rgba(7, 26, 77, 0.18);
+
+      & .m-message__close-icon {
+        opacity: 1;
+      }
+    }
+
+    /* Animation */
+    &.from-remove {
+      transition: all .25s ease,transform .3s ease .1s,max-height .25s ease,clip-path .75s ease-in-out .1s,-webkit-transform .3s ease .1s,-webkit-clip-path .5s ease .1s;
+      transition-property: all, transform, max-height, clip-path, -webkit-transform, -webkit-clip-path;
+      transition-duration: 0.25s, 0.3s, 0.25s, 0.75s, 0.3s, 0.5s;
+      transition-timing-function: ease, ease, ease, ease, ease, ease;
+      transition-delay: 0s, 0.1s, 0s, 0.1s, 0.1s, 0.1s;
+      clip-path: inset(0 0 0 0);
+      opacity: 1 !important;
+    }
+
+    &.to-remove {
+      clip-path: inset(0 0 100% 0);
+      opacity: 0 !important;
+    }
+
+    &.from-show {
+      transition: all .25s ease,transform .3s ease .1s,max-height .25s ease,clip-path .75s ease-in-out .1s,-webkit-transform .3s ease .1s,-webkit-clip-path .5s ease .1s;
+      transition-property: all, transform, max-height, clip-path, -webkit-transform, -webkit-clip-path;
+      transition-duration: 0.25s, 0.3s, 0.25s, 0.75s, 0.3s, 0.5s;
+      transition-timing-function: ease, ease, ease, ease, ease, ease;
+      transition-delay: 0s, 0.1s, 0s, 0.1s, 0.1s, 0.1s;
+      right: -50px !important;
+      clip-path: circle(15% at 85% 50%);
+      opacity: 0 !important;
+    }
+
+    &.to-show {
+      right: 0 !important;
+      clip-path: circle(100% at 50% 50%);
+      opacity: 1 !important;
+    }
+
+    /* Animation end */
+
+    &.default-type {
+      background-color: #fff;
+      color: #000;
+    }
+
+    &.error-type {
+      background-color: rgb(255, 71, 87);
+      color: #fff;
+      padding-left: 50px;
+
+      .m-message__close-icon {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.27);
+        }
+      }
+    }
+
+    &.success-type {
+      background-color: rgb(70, 201, 58);
+      color: #fff;
+      padding-left: 50px;
+
+      .m-message__close-icon {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.27);
+        }
+      }
+    }
+
+    &.warning-type {
+      background-color: rgb(255,186,0);
+      color: #fff;
+      padding-left: 50px;
+
+      .m-message__close-icon {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.27);
+        }
+      }
+    }
+  }
+}

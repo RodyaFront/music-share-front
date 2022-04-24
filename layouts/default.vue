@@ -96,49 +96,21 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-dialog
-      v-model="signInDialog"
-      width="300"
-      transition="slide-x-transition"
+    <login-dialog
+      :dialog="signInDialog"
+      @update:dialog="signInDialog = $event"
+      @close="closeDialogs"
+      @switchDialog="switchAuthDialogs"
     >
-      <v-card>
-        <v-card-title class="text-h5 lighten-2"> Авторизируйся </v-card-title>
-        <v-card-text>
-          Войди в аккаунт что-бы получить дополнительные возможности.
-        </v-card-text>
+    </login-dialog>
 
-        <v-card-text>
-          <v-form v-model="formModel">
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="formData.email"
-                  label="Почта"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="formData.password"
-                  label="Пароль"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="error" text @click="signInDialog = false">
-            Назад
-          </v-btn>
-          <v-btn color="primary" text @click="handleSignIn" :loading="loading">
-            Войти
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <register-dialog
+      :dialog="registerDialog"
+      @update:dialog="registerDialog = $event"
+      @close="closeDialogs"
+      @switchDialog="switchAuthDialogs"
+    >
+    </register-dialog>
   </v-app>
 </template>
 
@@ -150,6 +122,7 @@ export default {
   data() {
     return {
       signInDialog: false,
+      registerDialog: false,
       formModel: null,
       drawer: true,
       fixed: false,
@@ -165,18 +138,35 @@ export default {
     }
   },
   methods: {
+    closeDialogs() {
+      this.signInDialog = false
+      this.registerDialog = false
+    },
+    switchAuthDialogs() {
+      this.signInDialog = !this.signInDialog
+      this.registerDialog = !this.registerDialog
+    },
     switchDesign() {
       if (this.$store.getters.$newDesign) {
         return this.$store.commit('setNewDesign', false)
       }
       this.$store.commit('setNewDesign', true)
     },
-    handleSignIn() {
-      console.log(this.formData)
-      this.signInDialog = false
+  },
+  watch: {
+    error(error) {
+      this.$message.notification({
+        title: `Error type: ${error.type}. Status: ${error.status}`,
+        text: error.statusText,
+        type: 'error',
+        duration: 8000,
+      })
     },
   },
   computed: {
+    error() {
+      return this.$store.getters.$error
+    },
     loading() {
       return this.$store.getters.$loading
     },

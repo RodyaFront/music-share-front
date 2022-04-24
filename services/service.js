@@ -1,8 +1,8 @@
 import Cookie from 'cookie'
 
-const serverUrl = 'http://localhost:5000'
+const serverUrl = 'http://192.168.0.103:3000'
 
-export default class Service {
+class Service {
   async postImg(url, commit, formData, isAuthorization = false) {
     const response = await fetch(`${serverUrl}${url}`, {
       method: 'POST',
@@ -23,11 +23,10 @@ export default class Service {
         : this.noAuthorizationHeaders(),
       body: JSON.stringify(formData),
     })
-    const data = await response.json()
-    if (data && data.errors && data.errors.message.length) {
-      commit('setError', data.errors.message, { root: true })
+    if (!response.ok) {
+      return commit('setError', response, { root: true })
     }
-    return data
+    return await response.json()
   }
 
   async get(url, commit, isAuthorization = false) {
@@ -37,11 +36,10 @@ export default class Service {
         ? this.authorizationHeaders()
         : this.noAuthorizationHeaders(),
     })
-    const data = await response.json()
-    if (data && data.errors && data.errors.message.length) {
-      commit('setError', data.errors.message, { root: true })
+    if (!response.ok) {
+      return commit('setError', response, { root: true })
     }
-    return data
+    return await response.json()
   }
 
   authorizationHeaders() {
@@ -67,3 +65,5 @@ export default class Service {
     }
   }
 }
+
+export default new Service()

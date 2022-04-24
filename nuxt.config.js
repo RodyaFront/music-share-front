@@ -3,6 +3,12 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   ssr: false,
 
+  server: {
+    port: 3002,
+    host: '127.0.0.1',
+    timing: false,
+  },
+
   head: {
     titleTemplate: '%s - music-share',
     title: 'music-share',
@@ -20,7 +26,12 @@ export default {
 
   css: ['@/theme/index.scss'],
 
-  plugins: [],
+  plugins: [
+    {
+      src: '@/plugins/global.js',
+      mode: 'client',
+    },
+  ],
 
   components: true,
 
