@@ -1,5 +1,4 @@
 export const state = () => ({
-  serverUrl: 'http://localhost:5000',
   $loading: false,
   $error: null,
   $newDesign: true,
@@ -15,7 +14,11 @@ export const mutations = {
     state.$newDesign = payload
   },
 }
-export const actions = {}
+export const actions = {
+  nuxtServerInit({ dispatch }) {
+    dispatch('auth/autoLogin')
+  },
+}
 export const getters = {
   $loading: (state) => state.$loading,
   $error: (state) => state.$error,

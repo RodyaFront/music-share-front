@@ -82,6 +82,7 @@
                   v-model="link"
                   label="Ссылка"
                   clearable
+                  :disabled="loading"
                 ></v-text-field>
               </v-col>
               <v-col cols="6">
@@ -91,6 +92,7 @@
                   multiple
                   clearable
                   label="Жанры"
+                  :disabled="loading"
                 ></v-autocomplete>
               </v-col>
             </v-row>
